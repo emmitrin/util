@@ -1,6 +1,9 @@
 package collections
 
 import (
+	"bytes"
+	"encoding/gob"
+	"encoding/json"
 	"math/rand"
 	"time"
 )
@@ -24,6 +27,72 @@ type Set[T comparable] struct {
 	// useful when some action requires a sequence of elements,
 	// not their map representation
 	snap []T
+}
+
+func (s *Set[T]) MarshalJSON() ([]byte, error) {
+	s.checkSnap()
+
+	b := &bytes.Buffer{}
+
+	enc := json.NewEncoder(b)
+
+	err := enc.Encode(s.snap)
+	if err != nil {
+		return nil, err
+	}
+
+	return b.Bytes(), nil
+}
+
+func (s *Set[T]) UnmarshalJSON(b []byte) error {
+	var strSlice []string
+
+	dec := json.NewDecoder(bytes.NewReader(b))
+
+	err := dec.Decode(&strSlice)
+	if err != nil {
+		return err
+	}
+
+	s.Clear()
+	for _, v := range strSlice {
+		s.Add(v)
+	}
+
+	return nil
+}
+
+func (s *Set[T]) GobEncode() ([]byte, error) {
+	s.checkSnap()
+
+	b := &bytes.Buffer{}
+
+	enc := gob.NewEncoder(b)
+
+	err := enc.Encode(s.snap)
+	if err != nil {
+		return nil, err
+	}
+
+	return b.Bytes(), nil
+}
+
+func (s *Set[T]) GobDecode(b []byte) error {
+	var strSlice []string
+
+	dec := gob.NewDecoder(bytes.NewReader(b))
+
+	err := dec.Decode(&strSlice)
+	if err != nil {
+		return err
+	}
+
+	s.Clear()
+	for _, v := range strSlice {
+		s.Add(v)
+	}
+
+	return nil
 }
 
 func (s *Set[T]) Add(val T) bool {
