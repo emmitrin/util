@@ -17,3 +17,13 @@ func ConvertMap[K1 comparable, V1 any, K2 comparable, V2 any](
 
 	return converted, nil
 }
+
+func MapKeys[T1 comparable, T2 any](m map[T1]T2) []T1 {
+	l := make([]T1, 0, len(m))
+
+	for k := range m {
+		l = append(l, k)
+	}
+
+	return l
+}

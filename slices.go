@@ -26,3 +26,17 @@ func Convert[T1, T2 any](s []T1, conv func(T1) (T2, error)) ([]T2, error) {
 
 	return converted, nil
 }
+
+func Compare[T comparable](a []T, b []T) bool {
+	if len(a) != len(b) {
+		return false
+	}
+
+	for i, v := range a {
+		if b[i] != v {
+			return false
+		}
+	}
+
+	return true
+}
