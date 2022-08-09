@@ -45,17 +45,17 @@ func (s *Set[T]) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Set[T]) UnmarshalJSON(b []byte) error {
-	var strSlice []string
+	var slice []T
 
 	dec := json.NewDecoder(bytes.NewReader(b))
 
-	err := dec.Decode(&strSlice)
+	err := dec.Decode(&slice)
 	if err != nil {
 		return err
 	}
 
 	s.Clear()
-	for _, v := range strSlice {
+	for _, v := range slice {
 		s.Add(v)
 	}
 
@@ -78,17 +78,17 @@ func (s *Set[T]) GobEncode() ([]byte, error) {
 }
 
 func (s *Set[T]) GobDecode(b []byte) error {
-	var strSlice []string
+	var slice []T
 
 	dec := gob.NewDecoder(bytes.NewReader(b))
 
-	err := dec.Decode(&strSlice)
+	err := dec.Decode(&slice)
 	if err != nil {
 		return err
 	}
 
 	s.Clear()
-	for _, v := range strSlice {
+	for _, v := range slice {
 		s.Add(v)
 	}
 
