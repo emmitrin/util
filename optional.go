@@ -9,11 +9,6 @@ func (o *Optional[T]) HasValue() bool {
 	return o.hasValue
 }
 
-func (o *Optional[T]) SetValue(v T) {
-	o.value = v
-	o.hasValue = true
-}
-
 func (o *Optional[T]) Value() T {
 	return o.value
 }
