@@ -23,7 +23,7 @@ var dummy = _dummy{}
 type Set[T comparable] struct {
 	m map[T]_dummy
 
-	// Snap is a cached version of the set,
+	// Snap is an eventual duplicate of set's items stored in a slice,
 	// useful when some action requires a sequence of elements,
 	// not their map representation
 	snap []T
@@ -117,19 +117,13 @@ func (s *Set[T]) Delete(val T) {
 }
 
 func (s *Set[T]) checkSnap() {
-	if s.snap == nil {
-		s.hardSnap()
-	} else if len(s.snap) != len(s.m) {
+	if s.snap == nil || len(s.snap) != len(s.m) {
 		s.hardSnap()
 	}
 }
 
 func (s *Set[T]) hardSnap() {
-	s.snap = make([]T, 0, len(s.m))
-
-	for k := range s.m {
-		s.snap = append(s.snap, k)
-	}
+	s.snap = MapKeys(s.m)
 }
 
 func (s *Set[T]) Clear() {
