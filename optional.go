@@ -1,4 +1,4 @@
-package collections
+package util
 
 type Optional[T any] struct {
 	value    T

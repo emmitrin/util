@@ -1,4 +1,4 @@
-package collections
+package util
 
 func Filter[T any](s []T, f func(T) bool) []T {
 	var filtered []T

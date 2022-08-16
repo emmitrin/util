@@ -1,4 +1,4 @@
-package collections
+package util
 
 func First[T1, T2 any](a T1, b T2) T1 {
 	return a

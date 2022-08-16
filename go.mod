@@ -1,3 +1,3 @@
-module github.com/emmitrin/collections
+module github.com/emmitrin/util
 
 go 1.18

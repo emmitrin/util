@@ -1,4 +1,4 @@
-package collections
+package util
 
 import (
 	"strconv"
@@ -9,7 +9,7 @@ func TestConvert(t *testing.T) {
 	// easily convert slices of values
 	numberStrings := []string{"10", "12", "14", "16"}
 
-	numbers, err := Convert(numberStrings, strconv.Atoi)
+	numbers, err := Convert(numberStrings, strconv.Atoi) // <- pass stdlib functions as converters
 	if err != nil {
 		t.Error(err)
 	}
