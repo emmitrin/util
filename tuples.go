@@ -13,14 +13,18 @@ type Tuple[T1, T2 any] struct {
 	second T2
 }
 
-func (t *Tuple[T1, T2]) First() T1 {
+func (t Tuple[T1, T2]) First() T1 {
 	return t.first
 }
 
-func (t *Tuple[T1, T2]) Second() T2 {
+func (t Tuple[T1, T2]) Second() T2 {
 	return t.second
 }
 
-func NewTuple[T1, T2 any](first T1, second T2) *Tuple[T1, T2] {
-	return &Tuple[T1, T2]{first, second}
+func (t Tuple[T1, T2]) Unpack() (T1, T2) {
+	return t.First(), t.Second()
+}
+
+func MakeTuple[T1, T2 any](first T1, second T2) Tuple[T1, T2] {
+	return Tuple[T1, T2]{first, second}
 }
