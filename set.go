@@ -167,10 +167,10 @@ func (s *Set[T]) Range(f func(T) bool) {
 	}
 }
 
-func (s *Set[T]) Copy() *Set[T] {
+func (s *Set[T]) Copy() Set[T] {
 	s.checkSnap()
 
-	return NewSet[T](s.snap...)
+	return MakeSet[T](s.snap...)
 }
 
 func (s *Set[T]) Pick() T {
@@ -183,8 +183,8 @@ func (s *Set[T]) Pick() T {
 	return s.snap[randomizer.Intn(len(s.snap))]
 }
 
-func NewSet[T comparable](init ...T) *Set[T] {
-	s := &Set[T]{m: map[T]_dummy{}}
+func MakeSet[T comparable](init ...T) Set[T] {
+	s := Set[T]{m: map[T]_dummy{}}
 
 	for _, val := range init {
 		s.Add(val)
